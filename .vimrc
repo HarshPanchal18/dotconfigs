@@ -1,3 +1,15 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
+"               
+"               ██╗   ██╗██╗███╗   ███╗██████╗  ██████╗
+"               ██║   ██║██║████╗ ████║██╔══██╗██╔════╝
+"               ██║   ██║██║██╔████╔██║██████╔╝██║     
+"               ╚██╗ ██╔╝██║██║╚██╔╝██║██╔══██╗██║     
+"                ╚████╔╝ ██║██║ ╚═╝ ██║██║  ██║╚██████╗
+"                 ╚═══╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝
+"               
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+
+
 "" Map leader to ,
 let mapleader = ","
 
@@ -20,11 +32,26 @@ set number relativenumber
 set wildmenu
 set splitbelow
 set cursorline
+set cursorcolumn
+set hlsearch ""highlighting on search
+"set completeopt += longest
+
+" There are certain files that we would never want to edit with Vim.
+" Wildmenu will ignore files with these extensions.
+set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
+
 
 "" Set colour scheme to solarized8_flat
 set background=dark
 set encoding=utf8
 colorscheme gruvbox
+
+call plug#begin('~/.vim/plugged')
+Plug 'ervandew/supertab'                "" tab autocomplete
+Plug 'jiangmiao/auto-pairs'
+""Plug 'sheerun/vim-polyglot'
+call plug#end() 
+
 
 "" Indentation and syntax highlighting
 filetype plugin indent on
@@ -106,3 +133,33 @@ noremap <leader>7 7gt
 noremap <leader>8 8gt
 noremap <leader>9 9gt
 noremap <leader>0 :tablast<cr>
+
+
+" STATUS LINE ------------------------------------------------------------ {{{
+
+" Clear status line when vimrc is reloaded.
+"set statusline=
+
+" Status line left side.
+"set statusline+=\ %F\ %M\ %Y\ %R
+
+" Use a divider to separate the left side from the right side.
+"set statusline+=%=
+
+" Status line right side.
+"set statusline+=\ ascii:\ %b\ hex:\ 0x%B\ row:\ %l\ col:\ %c\ percent:\ %p%%
+
+" Show the status on the second to last line.
+"set laststatus=2
+
+" }}}
+"
+"%F – Display the full path of the current file.
+"%M – Modified flag shows if file is unsaved.
+"%Y – Type of file in the buffer.
+"%R – Displays the read-only flag.
+"%b – Shows the ASCII/Unicode character under cursor.
+"0x%B – Shows the hexadecimal character under cursor.
+"%l – Display the row number.
+"%c – Display the column number.
+"%p%% – Show the cursor percentage from the top of the file."
