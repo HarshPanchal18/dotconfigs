@@ -47,9 +47,12 @@ set encoding=utf8
 colorscheme gruvbox
 
 call plug#begin('~/.vim/plugged')
+
 Plug 'ervandew/supertab'                "" tab autocomplete
 Plug 'jiangmiao/auto-pairs'
 ""Plug 'sheerun/vim-polyglot'
+Plug 'wakatime/vim-wakatime'
+
 call plug#end() 
 
 
