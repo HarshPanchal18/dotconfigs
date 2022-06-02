@@ -82,6 +82,10 @@ set nowritebackup"
 "And now turn vim swap file off
 set noswapfile
 
+" To make save the folds of given file
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview
+
 
 
 " Return to last edit position when opening files (You want this!)
