@@ -36,6 +36,7 @@ set wildmenu
 set splitbelow
 set cursorline
 set cursorcolumn
+set tabpagemax=30 " Maximum number of tabs user can open
 set hlsearch ""highlighting on search
 "set completeopt += longest
 
