@@ -87,6 +87,17 @@ set noswapfile
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 
+"Code snippets for different codebases
+nnoremap ,html : -1read $HOME/.vim/.skeleton.html<CR>2jwf>a
+nnoremap ,c : -1read $HOME/.vim/.skeleton.c<CR>3ji
+nnoremap ,cpp : -1read $HOME/.vim/.skeleton.cpp<CR>3ji
+nnoremap ,sh : -1read $HOME/.vim/.skeleton.sh<CR>8ji
+nnoremap ,py : -1read $HOME/.vim/.skeleton.py<CR>2j5la<space>
+nnoremap ,jj : -1read $HOME/.vim/.skeleton.java<CR>2jA<space>
+
+" Delete file from inside vim
+command! -complete=file -nargs=1 Remove :echo 'Remove: '.' '.(delete(<f-args>) == 0 ? 'SUCCEED' : 'FAILED')
+"Give->   :Remove %  ,where colon is mendatory and % means current file
 
 
 " Return to last edit position when opening files (You want this!)
