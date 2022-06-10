@@ -21,10 +21,13 @@ set showmatch
 set shiftwidth=2 " Number of auto-indent spaces
 set showmatch " Show matching brackets
 set showcmd " Show incomplete command
-set smartcase
-set ignorecase
-set incsearch
+" Set 7 lines to the cursor - when moving vertically using j/k
+"set so=7
+set smartcase " When searching try to be smart about cases
+set ignorecase " Ignore case when searching
+set incsearch " Makes search act like search in modern browsers
 set autoindent
+set autoread "Set to auto read when a file is changed from the outside
 set shiftwidth=4
 set smarttab
 set softtabstop=4
@@ -37,12 +40,27 @@ set splitbelow
 set cursorline
 set cursorcolumn
 set tabpagemax=30 " Maximum number of tabs user can open
-set hlsearch ""highlighting on search
+set noerrorbells " No annoying sounds on error
+set novisualbell
+set ai " Auto Indent
+set si " Smart Indent
+set hlsearch "highlighting on search
 "set completeopt += longest
+set wildmode=longest,list,full
+" Search down into subfolders
+" Provides tab-completion for all file-related tasks
+set path+=**
+" - :b lets you autocomplete any open buffer
 
 " There are certain files that we would never want to edit with Vim.
 " Wildmenu will ignore files with these extensions.
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx,*.git,*.rbc,*.pyc,__pycache__,*~,*.class
+
+" How many tenths of a second to blink when matching brackets
+"set mat=2
+set autowrite           " Automatically save before commands like :next and :make
+"set hidden             " Hide buffers when they are abandoned
+"set mouse=a            " Enable mouse usage (all modes)
 
 
 "" Set colour scheme to solarized8_flat
@@ -59,14 +77,48 @@ Plug 'wakatime/vim-wakatime'
 "Plug 'junegunn/fzf.vim'
 "Plug 'tomtom/tcomment_vim'
 "Plug 'ammarnajjar/vim-code-dark'
-
+"Plug 'tpope/vim-surround' Brackets and surrounds
+"Plug 'preservim/nerdtree'
+"Plug 'junegunn/goyo.vim'
+"Plug 'jreybert/vimagit'
+"Plug 'lukesmithxyz/vimling'
+"Plug 'vimwiki/vimwiki'
+"Plug 'vim-airline/vim-airline' Nice looking status bar
+"Plug 'tpope/vim-commentary'
+"Plug 'ap/vim-css-color'
 
 call plug#end() 
 
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+
+"call vundle#begin()
+
+"Plugin 'terryma/vim-multiple-cursors'  Like VSCode's multiple cursors
+"Plugin 'dense-analysis/ale'  Syntax checker
+"Plugin 'thaerkh/vim-workspace' enable workspaces (use :ToggleWorkspace to create a new workspace)
+"Plugin 'suan/vim-instant-markdown', {'rtp': 'after'}  Instantly preview markdown in browser
+"Plugin 'tpope/vim-fugitive' apparently the best git plugin for vim
+"Plugin 'tpope/vim-markdown' better markdown support
+
+"call vundle#end()
+
+" Disables automatic commenting on newline:
+        autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" Spell-check set to <leader>o, 'o' for 'orthography':
+        map <leader>o :setlocal spell! spelllang=en_us<CR>
+
+"" Set colour scheme to solarized8_flat
+set background=dark
+set encoding=utf8
+colorscheme gruvbox
 
 "Enable autosave plugin
 "let g:auto_save = 1
-"
 "let g:auto_save_loaded = 1
 "only save in normal mode periodically. If the value is changed to 1
 "then changes are saved when you are in insert mode too, as you type , but
@@ -87,6 +139,9 @@ set noswapfile
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 
+" Fast saving
+nmap <leader>w :w!<cr>
+
 "Code snippets for different codebases
 nnoremap ,html : -1read $HOME/.vim/.skeleton.html<CR>2jwf>a
 nnoremap ,c : -1read $HOME/.vim/.skeleton.c<CR>3ji
@@ -106,11 +161,49 @@ command! -complete=file -nargs=1 Remove :echo 'Remove: '.' '.(delete(<f-args>) =
                 \   exe "normal! g`\"" |
                 \ endif
 
-
+" Remember info about open buffers on close
+set viminfo^=%
 
 "" Indentation and syntax highlighting
 filetype plugin indent on
 syntax enable
+
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+map <space> /
+map <c-space> ?
+
+" Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Useful mappings for managing tabs
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+map <leader>t<leader> :tabnext
+
+" Disable hghlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
+" <silent> tells vim to show no message when this key sequence is used.
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+
+"Move a line up/down (Move line up/down)
+map <silent> <c-k>  :m -2<CR>
+map <silent> <c-j>  :m +1<CR>
+map <silent> <c-up>  :m -2<CR>
+map <silent> <c-down>  :m +1<CR>
 
 "" Automatically enable and disable relative line numbers
 augroup numbertoggle
@@ -177,6 +270,14 @@ augroup previous_position
 
 augroup END
 
+" Configure the `make` command to run RSpec
+"set makeprg=bundle\ exec\ rspec\ -f\ QuickfixFormatter
+" NOW WE CAN:
+" - Run :make to run RSpec
+" - :cl to list errors
+" - :cc# to jump to error by number
+" - :cn and :cp to navigate forward and back
+
 " Switch to tab by tab number
 noremap <leader>1 1gt
 noremap <leader>2 2gt
@@ -189,6 +290,9 @@ noremap <leader>8 8gt
 noremap <leader>9 9gt
 noremap <leader>0 :tablast<cr>
 
+" Delete file from inside vim
+command! -complete=file -nargs=1 Remove :echo 'Remove: '.' '.(delete(<f-args>) == 0 ? 'SUCCEED' : 'FAILED')
+"Give->   :Remove %  ,where colon is mendatory and % means current file
 
 " STATUS LINE ------------------------------------------------------------ {{{
 
@@ -398,3 +502,30 @@ endfunction
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
+
+" {{{ For YouCompleteMe
+let g:ycm_python_interpreter_path = ''
+let g:ycm_python_sys_path = []
+let g:ycm_extra_conf_vim_data = [
+  \  'g:ycm_python_interpreter_path',
+  \  'g:ycm_python_sys_path'
+  \]
+let g:ycm_global_ycm_extra_conf = '~/.ycm_global_extra_conf.py'
+"let g:ycm_filetype_specific_completion_to_disable = {
+      "\ 'python': 1
+      "\}
+"let g:ycm_filetype_blacklist = {
+      "\ 'python': 1
+      "\}
+let g:ycm_auto_trigger = 1
+let g:ycm_complete_in_comments = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+
+" trigger semantic completion after typing 2 characters
+let g:ycm_semantic_triggers = {
+  \   'cpp': [ 're!\w{2}' ],
+  \   'c': [ 're!\w{2}' ]
+  \ }
+
+" End YouCompleteMe
+" }}}
