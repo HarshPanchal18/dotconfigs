@@ -47,6 +47,9 @@ set si " Smart Indent
 set hlsearch "highlighting on search
 "set completeopt += longest
 set wildmode=longest,list,full
+"set nocompatible
+set dictionary+=/usr/share/dict/words
+filetype off
 " Search down into subfolders
 " Provides tab-completion for all file-related tasks
 set path+=**
@@ -73,6 +76,9 @@ call plug#begin('~/.vim/plugged')
 Plug 'ervandew/supertab'                "" tab autocomplete
 Plug 'jiangmiao/auto-pairs'
 Plug 'wakatime/vim-wakatime'
+Plug 'preservim/nerdcommenter'
+Plug 'sinetoami/dimfocus.vim'
+
 "Plug 'sheerun/vim-polyglot'
 "Plug 'junegunn/fzf.vim'
 "Plug 'tomtom/tcomment_vim'
@@ -86,6 +92,59 @@ Plug 'wakatime/vim-wakatime'
 "Plug 'vim-airline/vim-airline' Nice looking status bar
 "Plug 'tpope/vim-commentary'
 "Plug 'ap/vim-css-color'
+
+"Plug 'ryanoasis/vim-devicons'
+"Plug 'HerringtonDarkholme/yats.vim'
+"Plug 'cespare/vim-toml'
+"Plug 'tikhomirov/vim-glsl'
+"
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'Shougo/neosnippet.vim'
+"Plug 'Shougo/neosnippet-snippets'
+"Plug 'deoplete-plugins/deoplete-jedi'
+"Plug 'fszymanski/deoplete-emoji'
+""Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+"Plug 'racer-rust/vim-racer'
+"Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+"Plug 'Shougo/denite.nvim'
+"
+"Plug 'davidhalter/jedi-vim'
+"Plug 'a-vrma/black-nvim', {'do': ':UpdateRemotePlugins'}
+"
+"Plug 'Konfekt/FastFold'
+"Plug 'tmhedberg/SimpylFold'
+"
+"Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'tveskag/nvim-blame-line'
+
+"Plug 'vim-scripts/django.vim'
+
+"Plug 'vim-ruby/vim-ruby'
+"Plug 'tpope/vim-rails'
+"Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
+"Plug 'tpope/vim-bundler', { 'for': 'ruby' }
+"Plug 'stephpy/vim-yaml'
+
+"Plug 'machakann/vim-highlightedyank'
+"Plug 'mhinz/vim-startify'
+"Plug 'tpope/vim-rails'
+"Plug 'myusuf3/numbers.vim'
+"Plug 'bronson/vim-trailing-whitespace'
+"Plug 'godlygeek/tabular'
+"Plug 'jeetsukumaran/vim-buffergator'
+"Plug 'scrooloose/nerdcommenter'
+"Plug 'morhetz/gruvbox'
+"Plug 'scrooloose/nerdtree'
+"Plug 'neomake/neomake'
+"Plug 'tpope/vim-surround'
+"Plug 'easymotion/vim-easymotion'
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"Plug 'junegunn/fzf.vim'
+"Plug 'bling/vim-airline'
+"Plug 'nathanaelkane/vim-indent-guides'
+"Plug 'kien/rainbow_parentheses.vim'
+"Plug 'w0rp/ale'
 
 call plug#end() 
 
@@ -191,7 +250,19 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 map <leader>t<leader> :tabnext
 
-" Disable hghlight when <leader><cr> is pressed
+" clang_complete
+" ----------------------------------------------------
+if empty($CLANG_COMPLETE_LIB)
+  let g:clang_complete_loaded = 1
+endif
+
+let g:clang_library_path    = $CLANG_COMPLETE_LIB
+let g:clang_auto_select     = 1
+let g:clang_complete_auto   = 0
+let g:clang_snippets        = 0
+"}}}
+
+" Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 " <silent> tells vim to show no message when this key sequence is used.
 
@@ -278,6 +349,15 @@ augroup END
 " - :cc# to jump to error by number
 " - :cn and :cp to navigate forward and back
 
+"Some Abbreviations that saves me from reassure saving/exit command
+ab W w
+ab Wq wq
+ab wQ wq
+ab WQ wq
+ab Q q
+ab WQA wqa
+ab Wqa wqa
+
 " Switch to tab by tab number
 noremap <leader>1 1gt
 noremap <leader>2 2gt
@@ -293,6 +373,16 @@ noremap <leader>0 :tablast<cr>
 " Delete file from inside vim
 command! -complete=file -nargs=1 Remove :echo 'Remove: '.' '.(delete(<f-args>) == 0 ? 'SUCCEED' : 'FAILED')
 "Give->   :Remove %  ,where colon is mendatory and % means current file
+
+"" Use the 'wombat' colour scheme for in the lightline plugin
+let g:lightline = {'colorscheme': 'wombat'}
+
+"" Press ,<space> to bring up the terminal
+try
+    noremap <silent> <leader><space> :terminal fish<CR>
+catch
+    noremap <silent> <leader><space> :terminal bash<CR>
+endtry
 
 " STATUS LINE ------------------------------------------------------------ {{{
 
@@ -529,3 +619,33 @@ let g:ycm_semantic_triggers = {
 
 " End YouCompleteMe
 " }}}
+
+" sessionman.vim mappings
+noremap <leader>sa :SessionSaveAs<CR>
+noremap <leader>ss :SessionSave<CR>
+noremap <leader>so :SessionOpen
+noremap <leader>sl :SessionList<CR>
+noremap <leader>sc :SessionClose<CR>
+
+" Always do vimdiff in vertical splits
+set diffopt+=vertical
+" and ignore whitespace
+"set diffopt+=iwhite
+"
+"" tabular mappings (http://vimcasts.org/episodes/aligning-text-with-tabular-vim/)
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a: :Tabularize /:\zs<CR>
+vmap <Leader>a: :Tabularize /:\zs<CR>
+nmap <Leader>a> :Tabularize /=><CR>
+vmap <Leader>a> :Tabularize /=><CR>
+
+" use space bar to open/close folds
+nnoremap <space> za
+
+" clear highlight quick
+nnoremap <leader><Space> :nohls<CR>
+
+" easy tab navigation
+nnoremap <silent> <C-N> :tabnext<CR>
+nnoremap <silent> <C-P> :tabprev<CR>
