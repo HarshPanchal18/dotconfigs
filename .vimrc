@@ -276,6 +276,40 @@ map <silent> <c-j>  :m +1<CR>
 map <silent> <c-up>  :m -2<CR>
 map <silent> <c-down>  :m +1<CR>
 
+"works in insert mode
+imap <C-Up> <C-O>:m-2<CR><C-O>==
+imap <C-Down>  <C-O>:m+<CR><C-O>==
+
+" move the current line left or right
+nmap <C-Right> >>
+imap <C-Left> <C-O><<
+imap <C-Right> <C-O>>>
+nmap <C-Left> <<
+
+" move the selected block up or down
+vmap <C-Down>  :m'>+<CR>gv=gv
+vmap <C-Up> :m'<-2<CR>gv=gv
+
+" move the selected block left or right
+vmap <C-Right> >gv
+vmap <C-Left> <gv
+
+" map jk and kj to <Esc> in insert mode
+"inoremap jk <Esc>
+"inoremap kj <Esc>
+
+" Map Alt-(j/k) to move line/blocks of lines up or down
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+"Moving to the tab
+map <S-H> gT
+map <S-L> gt
+
 "" Automatically enable and disable relative line numbers
 augroup numbertoggle
   autocmd!
@@ -669,3 +703,24 @@ vmap <C-x> x
 " CTRL-V to paste (insert mode)
 imap <C-v> <esc>P
 
+" Yank from cursor to end of line
+nnoremap Y y$
+
+" Tab function from Hacking Vim by Kim Shulz
+" If no completion, insert tab.
+" Else check if an omnifunction
+function! SuperCleverTab()
+    if strpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
+        return "\<Tab>"
+    else
+        if &omnifunc != ''
+            return "\<C-X>\<C-O>"
+        elseif &dictionary != ''
+            return "\<C-K>"
+        else
+            return "\<C-N>"
+        endif
+    endif
+endfunction
+
+inoremap <Tab> <C-R>=SuperCleverTab()<cr>
