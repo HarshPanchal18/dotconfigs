@@ -311,6 +311,8 @@ augroup nerdtree
 
 augroup END
 
+map , :NERDTreeToggle<CR>
+
 "" Run NERDTreeTabs on vim startup
 let g:nerdtree_tabs_open_on_console_startup = 1
 
@@ -649,3 +651,21 @@ nnoremap <leader><Space> :nohls<CR>
 " easy tab navigation
 nnoremap <silent> <C-N> :tabnext<CR>
 nnoremap <silent> <C-P> :tabprev<CR>
+
+"Shortuts
+
+" map CTRL-E to end-of-line (insert mode)
+imap <C-e> <esc>$i<right>
+
+" map CTRL-A to beginning-of-line (insert mode)
+imap <C-a> <esc>0i
+
+" CTRL-C to copy (visual mode)
+vmap <C-c> y
+
+" CTRL-X to cut (visual mode)
+vmap <C-x> x
+
+" CTRL-V to paste (insert mode)
+imap <C-v> <esc>P
+
