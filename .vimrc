@@ -339,6 +339,11 @@ augroup nerdtree
     "" Focus on the opened file instead of on the NERDTree pane
     autocmd VimEnter * wincmd p
     
+    " Open terminal also on vim startup and make smaller
+    "autocmd Vimenter * terminal
+    "autocmd VimEnter * wincmd k "Set cursor to the file instead of terminal
+    "autocmd VimEnter * 7.5 wincmd + "Set width of the terminal
+    
     "" Open NERDTree even when no files are specified
     autocmd StdinReadPre * let s:std_in=1
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
