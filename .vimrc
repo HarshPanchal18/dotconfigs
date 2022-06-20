@@ -295,8 +295,8 @@ vmap <C-Right> >gv
 vmap <C-Left> <gv
 
 " map jk and kj to <Esc> in insert mode
-"inoremap jk <Esc>
-"inoremap kj <Esc>
+"inoremap jk <Esc>l
+"inoremap kj <Esc>l
 
 " Map Alt-(j/k) to move line/blocks of lines up or down
 nnoremap <A-j> :m .+1<CR>==
@@ -309,6 +309,17 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 "Moving to the tab
 map <S-H> gT
 map <S-L> gt
+
+"Tab mappings
+" tab navigation like firefox
+"nnoremap {         :tabprevious<CR>
+"nnoremap }         :tabnext<CR>
+"nnoremap <C-t>     :tabnew<CR>
+"inoremap <C-{>     <Esc>:tabprevious<CR>
+"inoremap <C-}>     <Esc>:tabnext<CR>
+"inoremap <C-t>     <Esc>:tabnew<CR>
+"nnoremap (         :tabmove -1<cr>
+"nnoremap )         :tabmove +1<cr>
 
 "" Automatically enable and disable relative line numbers
 augroup numbertoggle
@@ -351,6 +362,8 @@ augroup nerdtree
 augroup END
 
 map , :NERDTreeToggle<CR>
+map <leader>nt :NERDTreeToggle<CR>
+map <leader>nf :NERDTreeFind<CR>
 
 "" Run NERDTreeTabs on vim startup
 let g:nerdtree_tabs_open_on_console_startup = 1
@@ -483,6 +496,11 @@ endtry
 "    set statusline+=%L\ %P                                          " total lines, position in file
     " }}}
 
+"Append at the paragraph
+"If blank line(s) is exists under paragraph
+nmap aap }k$A
+"If not then
+nmap ap }A
 
 " delete trailing white spaces except for markdown
     autocmd BufWrite *.* :call DeleteTrailingWS()
@@ -690,6 +708,10 @@ nnoremap <leader><Space> :nohls<CR>
 " easy tab navigation
 nnoremap <silent> <C-N> :tabnext<CR>
 nnoremap <silent> <C-P> :tabprev<CR>
+
+" scroll up and down the page a little faster
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
 
 "Shortuts
 
