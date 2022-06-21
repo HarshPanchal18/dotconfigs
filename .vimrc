@@ -200,6 +200,20 @@ autocmd BufWinEnter *.* silent loadview
 
 " Fast saving
 nmap <leader>w :w!<cr>
+"nnoremap ZS :w<cr>
+" quit vim all
+"nnoremap ZE :wqa<cr>
+"nnoremap ZT :q<cr>
+"nnoremap ZX :qa<cr>
+" quit vim with exit code
+"nnoremap ZC :cq<cr>
+"nnoremap ZV :qa!<cr>
+
+" Get off my lawn
+nnoremap <Left> :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up> :echoe "Use k"<CR>
+nnoremap <Down> :echoe "Use j"<CR>
 
 "Code snippets for different codebases
 nnoremap ,html : -1read $HOME/.vim/.skeleton.html<CR>2jwf>a
@@ -498,7 +512,7 @@ endtry
 
 "Append at the paragraph
 "If blank line(s) is exists under paragraph
-nmap aap }k$A
+nmap aap }kA
 "If not then
 nmap ap }A
 
