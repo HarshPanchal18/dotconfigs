@@ -78,6 +78,19 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'wakatime/vim-wakatime'
 Plug 'preservim/nerdcommenter'
 Plug 'sinetoami/dimfocus.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'tveskag/nvim-blame-line'
+" Tags
+Plug 'preservim/tagbar', { 'on': 'TagbarToggle' }
+
+Plug 'alvan/vim-closetag'                   " autoclose html esq tags
+Plug 'pechorin/any-jump.vim'
+"Plug 'mhinz/vim-startify'  " start screen
+
+"Focusing
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim'
+" jump to definition/reference
 
 "Plug 'sheerun/vim-polyglot'
 "Plug 'junegunn/fzf.vim'
@@ -227,6 +240,12 @@ nnoremap ,jj : -1read $HOME/.vim/.skeleton.java<CR>2jA<space>
 command! -complete=file -nargs=1 Remove :echo 'Remove: '.' '.(delete(<f-args>) == 0 ? 'SUCCEED' : 'FAILED')
 "Give->   :Remove %  ,where colon is mendatory and % means current file
 
+" Auto delete trailing whitespace, save cursor position
+autocmd BufWritePre * let currPos = getpos(".")
+autocmd BufWritePre * %s/\s\+$//e
+autocmd BufWritePre * %s/\n\+\%$//e
+autocmd BufWritePre *.[ch] %s/\%$/\r/e
+autocmd BufWritePre * cal cursor(currPos[1], currPos[2])
 
 " Return to last edit position when opening files (You want this!)
     autocmd BufReadPost *
@@ -236,6 +255,11 @@ command! -complete=file -nargs=1 Remove :echo 'Remove: '.' '.(delete(<f-args>) =
 
 " Remember info about open buffers on close
 set viminfo^=%
+
+"change cursor shape
+"let &t_SI = "\<Esc>[6 q"                        " insert mode, vertical bar
+"let &t_SR = "\<Esc>[4 q"                        " replace mode, underscore
+"let &t_EI = "\<Esc>[2 q"
 
 "" Indentation and syntax highlighting
 filetype plugin indent on
