@@ -228,6 +228,24 @@ nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up> :echoe "Use k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
 
+"Append at the paragraph
+"If blank line(s) is exists under paragraph
+nmap aap }kA
+"If not then
+nmap ap }A
+
+"Make a word in quote
+nnoremap <Leader>qw" ciw""<Esc>P
+nnoremap <Leader>qw' ciw''<Esc>P
+nnoremap <Leader>qd daW"=substitute(@@,"'\\\|\"","","g")<CR>P
+
+"Make a sentence in quote
+nnoremap <Leader>qb" disi""<Esc>P
+nnoremap <Leader>qb' disi''<Esc>P
+
+"Enclose all words in a line in Double Quotes
+":s/\(\S\+\)/"\1"/
+
 "Code snippets for different codebases
 nnoremap ,html : -1read $HOME/.vim/.skeleton.html<CR>2jwf>a
 nnoremap ,c : -1read $HOME/.vim/.skeleton.c<CR>3ji
@@ -235,6 +253,7 @@ nnoremap ,cpp : -1read $HOME/.vim/.skeleton.cpp<CR>3ji
 nnoremap ,sh : -1read $HOME/.vim/.skeleton.sh<CR>8ji
 nnoremap ,py : -1read $HOME/.vim/.skeleton.py<CR>2j5la<space>
 nnoremap ,jj : -1read $HOME/.vim/.skeleton.java<CR>2jA<space>
+nnoremap ,php : -1read $HOME/.vim/.skeleton.php<CR>jwwa
 
 " Delete file from inside vim
 command! -complete=file -nargs=1 Remove :echo 'Remove: '.' '.(delete(<f-args>) == 0 ? 'SUCCEED' : 'FAILED')
@@ -534,11 +553,6 @@ endtry
 "    set statusline+=%L\ %P                                          " total lines, position in file
     " }}}
 
-"Append at the paragraph
-"If blank line(s) is exists under paragraph
-nmap aap }kA
-"If not then
-nmap ap }A
 
 " delete trailing white spaces except for markdown
     autocmd BufWrite *.* :call DeleteTrailingWS()
