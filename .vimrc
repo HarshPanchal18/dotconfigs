@@ -228,6 +228,24 @@ nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up> :echoe "Use k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
 
+" Disable arrow keys for insert mode.
+"inoremap <up> <Nop>
+"inoremap <down> <Nop>
+"inoremap <left> <Nop>
+"inoremap <right> <Nop>
+
+" Disable arrow keys for visual mode.
+"vnoremap <up> <Nop>
+"vnoremap <down> <Nop>
+"vnoremap <left> <Nop>
+"vnoremap <right> <Nop>
+
+" Disable arrow keys for command mode.
+"cnoremap <up> <Nop>
+"cnoremap <down> <Nop>
+"cnoremap <left> <Nop>
+"cnoremap <right> <Nop>
+
 "Append at the paragraph
 "If blank line(s) is exists under paragraph
 nmap aap }kA
@@ -235,16 +253,34 @@ nmap aap }kA
 nmap ap }A
 
 "Make a word in quote
-nnoremap <Leader>qw" ciw""<Esc>P
-nnoremap <Leader>qw' ciw''<Esc>P
+nnoremap <Leader>qw" ciw""<Esc>Pw
+nnoremap <Leader>qw' ciw''<Esc>Pw
 nnoremap <Leader>qd daW"=substitute(@@,"'\\\|\"","","g")<CR>P
 
 "Make a sentence in quote
 nnoremap <Leader>qb" disi""<Esc>P
 nnoremap <Leader>qb' disi''<Esc>P
 
+" Remove double- or single-quotes, or graves wrapped around a string.
+noremap <silent> <leader>rdq mmF"xf"x`m
+noremap <silent> <leader>rsq mmF'xf'x`m
+noremap <silent> <leader>rg mmF`xf`x`m
+
+" Jump up or down by 10 lines.
+noremap <silent> K 10j
+noremap <silent> L 10k
+
 "Enclose all words in a line in Double Quotes
 ":s/\(\S\+\)/"\1"/
+
+" Center-, right-, or left-align one or more lines.
+noremap <silent> <leader>ac :center<CR>
+noremap <silent> <leader>ar :right<CR>
+noremap <silent> <leader>al :left<CR>
+
+" Go to the next or previous file in the queue.
+noremap <silent> <leader>nn :next<CR>
+noremap <silent> <leader>pp :prev<CR>
 
 "Code snippets for different codebases
 nnoremap ,html : -1read $HOME/.vim/.skeleton.html<CR>2jwf>a
@@ -254,6 +290,18 @@ nnoremap ,sh : -1read $HOME/.vim/.skeleton.sh<CR>8ji
 nnoremap ,py : -1read $HOME/.vim/.skeleton.py<CR>2j5la<space>
 nnoremap ,jj : -1read $HOME/.vim/.skeleton.java<CR>2jA<space>
 nnoremap ,php : -1read $HOME/.vim/.skeleton.php<CR>jwwa
+
+" Source this file again.
+noremap <silent> <leader>rc :source ~/.vimrc<CR>
+
+" Run the current file with PERL, Python, BASH, or a Bourne Shell derivative.
+noremap <silent> <leader>rpl :!clear; perl %<CR>
+noremap <silent> <leader>rpy :!clear; python %<CR>
+noremap <silent> <leader>rb :!clear; bash %<CR>
+noremap <silent> <leader>rs :!clear; sh %<CR>
+
+" Underline the current line, based on its length.
+noremap <silent> <leader>ul mmyypVr-<Esc>`m
 
 " Delete file from inside vim
 command! -complete=file -nargs=1 Remove :echo 'Remove: '.' '.(delete(<f-args>) == 0 ? 'SUCCEED' : 'FAILED')
@@ -468,6 +516,7 @@ ab WQ wq
 ab Q q
 ab WQA wqa
 ab Wqa wqa
+ab teh the
 
 " Switch to tab by tab number
 noremap <leader>1 1gt
