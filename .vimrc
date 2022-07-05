@@ -248,9 +248,9 @@ nnoremap <Down> :echoe "Use j"<CR>
 
 "Append at the paragraph
 "If blank line(s) is exists under paragraph
-nmap aap }kA
+nmap <leader>aap }kA
 "If not then
-nmap ap }A
+nmap <leader>ap }A
 
 "Make a word in quote
 nnoremap <Leader>qw" ciw""<Esc>Pw
@@ -266,9 +266,9 @@ noremap <silent> <leader>rdq mmF"xf"x`m
 noremap <silent> <leader>rsq mmF'xf'x`m
 noremap <silent> <leader>rg mmF`xf`x`m
 
-" Jump up or down by 10 lines.
-noremap <silent> K 10j
-noremap <silent> L 10k
+" Jump up or down by 5 lines.
+noremap <silent> K 5j
+noremap <silent> L 5k
 
 "Enclose all words in a line in Double Quotes
 ":s/\(\S\+\)/"\1"/
@@ -283,13 +283,13 @@ noremap <silent> <leader>nn :next<CR>
 noremap <silent> <leader>pp :prev<CR>
 
 "Code snippets for different codebases
-nnoremap ,html : -1read $HOME/.vim/.skeleton.html<CR>2jwf>a
-nnoremap ,c : -1read $HOME/.vim/.skeleton.c<CR>3ji
-nnoremap ,cpp : -1read $HOME/.vim/.skeleton.cpp<CR>3ji
-nnoremap ,sh : -1read $HOME/.vim/.skeleton.sh<CR>8ji
-nnoremap ,py : -1read $HOME/.vim/.skeleton.py<CR>2j5la<space>
-nnoremap ,jj : -1read $HOME/.vim/.skeleton.java<CR>2jA<space>
-nnoremap ,php : -1read $HOME/.vim/.skeleton.php<CR>jwwa
+nnoremap <leader>html : -1read $HOME/.vim/.skeleton.html<CR>2jwf>a
+nnoremap <leader>c : -1read $HOME/.vim/.skeleton.c<CR>3ji
+nnoremap <leader>cpp : -1read $HOME/.vim/.skeleton.cpp<CR>3ji
+nnoremap <leader>sh : -1read $HOME/.vim/.skeleton.sh<CR>8ji
+nnoremap <leader>py : -1read $HOME/.vim/.skeleton.py<CR>2j5la<space>
+nnoremap <leader>jj : -1read $HOME/.vim/.skeleton.java<CR>2jA<space>
+nnoremap <leader>php : -1read $HOME/.vim/.skeleton.php<CR>jwwa
 
 " Source this file again.
 noremap <silent> <leader>rc :source ~/.vimrc<CR>
@@ -299,6 +299,7 @@ noremap <silent> <leader>rpl :!clear; perl %<CR>
 noremap <silent> <leader>rpy :!clear; python %<CR>
 noremap <silent> <leader>rb :!clear; bash %<CR>
 noremap <silent> <leader>rs :!clear; sh %<CR>
+noremap <silent> <leader>rphp :!clear; php %<CR>
 
 " Underline the current line, based on its length.
 noremap <silent> <leader>ul mmyypVr-<Esc>`m
@@ -466,7 +467,7 @@ augroup nerdtree
 
 augroup END
 
-map , :NERDTreeToggle<CR>
+"map , :NERDTreeToggle<CR>
 map <leader>nt :NERDTreeToggle<CR>
 map <leader>nf :NERDTreeFind<CR>
 
