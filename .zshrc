@@ -10,6 +10,10 @@ setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
 
+screenfetch
+
+curl -s 'wttr.in/Surat?format=3' # Returns weather of my city
+
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 
 # hide EOL sign ('%')
@@ -212,7 +216,7 @@ alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
 alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
 alias tofish="sudo chsh $USER -s /bin/fish && echo 'Now log out.'"
 
-alias ssn="shutdown now"
+alias sn="shutdown now"
 alias sr="reboot"
 
 # enable auto-suggestions based on the history
