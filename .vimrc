@@ -324,6 +324,14 @@ autocmd BufWritePre * cal cursor(currPos[1], currPos[2])
 " Remember info about open buffers on close
 set viminfo^=%
 
+"Autocompletion with system function not only with pattern matching
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType c set omnifunc=ccomplete#Complete
+
 "change cursor shape
 "let &t_SI = "\<Esc>[6 q"                        " insert mode, vertical bar
 "let &t_SR = "\<Esc>[4 q"                        " replace mode, underscore
@@ -466,6 +474,9 @@ augroup nerdtree
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 augroup END
+
+" trigger the refresh automatically when focusing the NERDTree window.
+   476  autocmd BufEnter NERD_tree_* | execute 'normal R'
 
 "map , :NERDTreeToggle<CR>
 map <leader>nt :NERDTreeToggle<CR>
