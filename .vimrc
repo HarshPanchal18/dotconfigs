@@ -222,6 +222,16 @@ nmap <leader>w :w!<cr>
 "nnoremap ZC :cq<cr>
 "nnoremap ZV :qa!<cr>
 
+" Display help in new tab
+nnoremap <leader>h :tabnew<CR>:help<CR><C-w><C-w>:quit<CR>
+
+"Copy-Paste Stuff
+"nnoremap <C-C> "+y
+"vnoremap <C-C> "+y
+"nnoremap <C-P> "+p
+"vnoremap <C-P> "+p
+
+
 " Get off my lawn
 nnoremap <Left> :echoe "Use h"<CR>
 nnoremap <Right> :echoe "Use l"<CR>
