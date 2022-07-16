@@ -10,8 +10,9 @@ setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
 
-screenfetch
-
+#screenfetch
+neofetch # Edit .config/neofetch/config.conf as you prefer what details to dislpay
+#neofetch --ascii_distro pop
 curl -s 'wttr.in/Surat?format=3' # Returns weather of my city
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
@@ -218,6 +219,7 @@ alias tofish="sudo chsh $USER -s /bin/fish && echo 'Now log out.'"
 
 alias sn="shutdown now"
 alias sr="reboot"
+cdl() {cd "$@" && ls;}
 
 # enable auto-suggestions based on the history
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
