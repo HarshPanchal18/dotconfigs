@@ -11,6 +11,7 @@ setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
 
 #screenfetch
+figlet -f emboss ROOT
 neofetch # Edit .config/neofetch/config.conf as you prefer what details to dislpay
 #neofetch --ascii_distro pop
 curl -s 'wttr.in/Surat?format=3' # Returns weather of my city
