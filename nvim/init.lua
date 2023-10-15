@@ -18,3 +18,7 @@ set.shiftwidth=2
 set.shiftround=true
 set.expandtab=true
 
+vim.g.mapleader=' '
+vim.g.localmapleader=' '
+
+vim.keymap.set('n', '<leader>h', ':nohlsearch<CR>')
