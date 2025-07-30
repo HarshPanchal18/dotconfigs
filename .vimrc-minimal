@@ -1,0 +1,114 @@
+set number
+set relativenumber
+
+colorscheme torte " pablo,torte,desert,industry,slate
+
+set showmatch " Show matching brackets
+set showcmd " Show incomplete command
+" set hlsearch
+
+" Set 7 lines of gap to the cursor - when moving vertically using j/k
+set so=7
+
+set softtabstop=2
+set shiftwidth=2
+" set list
+
+set incsearch
+set autoread
+set undolevels=1000
+set ls=2
+
+" Sets how to auto-complete with CTRL+P
+set complete=.,b
+
+" tab-completion for all file-related tasks
+set path+=**
+
+filetype on
+
+" There are certain files that we would never want to edit with Vim.
+" Wildmenu will ignore files with these extensions.
+set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx,*.git,*.rbc,*.pyc,__pycache__,*~,*.class
+
+"Some Abbreviations that saves me from reassure saving/exit command
+ab W w
+ab Wq wq
+ab wQ wq
+ab WQ wq
+ab Q q
+ab WQA wqa
+ab Wqa wqa
+ab teh the
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'wakatime/vim-wakatime'
+Plugin 'tpope/vim-fugitive'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'tpope/vim-speeddating'
+Plugin 'tpope/vim-surround' " https://github.com/tpope/vim-surround
+" Plugin 'airblade/vim-gitgutter'
+Plugin 'nathanaelkane/vim-indent-guides'
+
+call vundle#end()
+
+" status bar
+set statusline=%F\ %m\ " Absolute Filepath, Is modified
+set statusline+=%{exists('g:loaded_fugitive')?fugitive#statusline():''} " Git fugitive
+set statusline+=%=Ln:%l/%L\ Ch:%c\ (%p%%)\ \|\ " Cursor position
+set statusline+=ASCII:%b\ \|\ %Y\ " ASCII, Filetype
+
+" keymaps
+let mapleader = ","
+
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+map <space> /
+map <c-space> ?
+
+"Jump up or down by 5 lines.
+noremap <silent> K 5j
+noremap <silent> L 5k
+
+" Open explorer with F12
+map <F12> :E<CR>
+imap <F12> <Esc>:E<CR>
+
+" Save as with F2
+map <F2> :w<space>
+imap <F2> <Esc>:w<space>
+
+" Tab indentations
+nmap <tab> I<tab><esc>
+nmap <s-tab> ^i<bs><esc>
+
+" Allow undo in INSERT mode
+inoremap <c-u> <esc>ua
+
+" edit ~/.vimrc in a split
+map ,v :sp ~/.vimrc<CR>
+
+" update ~/.vimrc
+map ,u :source ~/.vimrc<CR>
+
+" Toggle line numbers and relativenumbers
+map <leader>nn :set number! relativenumber!<CR>
+" To paste outside VIM, Press Alt+Shift and Drag the mouse, Press Ctrl+Shift+C to copy, then Ctrl+V
+" You can toggle the line numbers with ,nn (as above)
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \   exe "normal! g`\"" | endif
+
+" Auto delete trailing whitespace on save
+autocmd BufWritePre * let currPos = getpos(".")
+autocmd BufWritePre * %s/\s\+$//e
+autocmd BufWritePre * %s/\n\+\%$//e
+autocmd BufWritePre *.[ch] %s/\%$/\r/e
+autocmd BufWritePre * cal cursor(currPos[1], currPos[2])
+
+
+" Inbuilt Vim-calc - https://vimtricks.com/p/vim-calculator/
+" Useful commands - https://vimtricks.com/p/50-useful-vim-commands/
